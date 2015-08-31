@@ -1,0 +1,11 @@
+using py emu
+
+1) get execution path, a real trace usage...
+
+2) identify semantics of a function
+
+3) heuristic approach to find what a function does..
+
+4) deobfuscating code
+
+5) a better decompilation
