@@ -1,5 +1,6 @@
 using py emu
 
+implementations
 1) get execution path, a real trace usage...
 
 2) identify semantics of a function
@@ -9,3 +10,10 @@ using py emu
 4) deobfuscating code
 
 5) a better decompilation
+
+
+upgradation
+
+1) use capstone instead of pydasm
+2) handle libraries
+3) use pypy for performance gains
