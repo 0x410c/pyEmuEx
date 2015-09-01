@@ -863,7 +863,7 @@ class PEPyEmu(PyEmu):
         self.heap_base = heap_base
         self.heap_size = heap_size
         self.frame_pointer = frame_pointer
-
+      #self.os = None
         # Get a memory manager object for the PE file
         self.memory = PEMemory(self)
 
@@ -876,7 +876,8 @@ class PEPyEmu(PyEmu):
     # setup_os: Adds a new thread based on which OS you are using
     #    
     def setup_os(self):
-        self.os.initialize(self, self.stack_base, self.stack_base - self.stack_size, self.heap_base, self.heap_base + self.heap_size)
+        self.os =PyWindows()
+        self.os.initialize( self,self.stack_base, (self.stack_base - self.stack_size), self.heap_base, (self.heap_base + self.heap_size))
     
     #
     # setup_context: Sets the needed stack pointers so we can execute

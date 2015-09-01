@@ -6863,7 +6863,7 @@ class PyCPU:
                     offset = op2.displacement
                     baseaddress = self.emu.get_selector(fs).base
                     
-                    op1value = self.get_memory(baseaddress + offset, size)
+                    op1value = self.get_memory(baseaddress + offset, asize)#size)        #modification, asize asgined instead of size
                 else:
                     op1value = self.get_memory_address(instruction, 1, asize)
                     
