@@ -42,6 +42,8 @@ for section in pe.sections:
         textsection = section
     elif section.Name.startswith(".data"):
         datasection = section
+    elif section.Name.startswith(".rdata"):
+        rdatasection = section
 
 emu = PEPyEmu()
 
@@ -53,13 +55,22 @@ for x in range(len(textsection.data)):
     emu.set_memory(codebase + x, int(ord(c)), size=1)
 
 print "[*] Text section loaded into memory"
+#print "[*] RData Section loading in memory"
 
+#for x in range(len(rdatasection.data)):
+ #   c = rdatasection.data[x]
+    #print "0x%08x"%(database + x)
+  #  emu.set_memory(database + x, int(ord(c)), size=1)
+#print "[*] RData Loaded in memory"
 print "[*] Loading data section bytes into memory"
-        
-for x in range(len(datasection.data)):
-    c = datasection.data[x]
-    
-    emu.set_memory(database + x, int(ord(c)), size=1)
+database = 0x40d000
+print len(datasection.data)
+for y in range(len(datasection.data)):
+    c = datasection.data[y]
+    #print "0x%08x"%(database + x + y)
+    if int(ord(c)) == 0xbb:
+        print "#################0x%08x"%(database+x+y)
+    emu.set_memory(database + y, int(ord(c)), size=1)
 
 print "[*] Data section loaded into memory\n"
 print "%08x"%emu.get_register("EIP")

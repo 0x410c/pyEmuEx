@@ -97,7 +97,7 @@ PyMemory:
     This class should be extended by any custom memory managers.
 '''
 class PyMemory:
-    DEBUG = 0
+    DEBUG = 2
     PAGESIZE = 4096
     
     def __init__(self, emu):
@@ -129,7 +129,8 @@ class PyMemory:
             if page not in self.pages:
                 if not self.get_page(page):
                     print "[!] Invalid memory"
-                    
+                    if self.DEBUG >= 2:
+                        self.dump_memory("mem_dump")                        #dump memory on page fault
                     return self.emu.raise_exception("GP", page)
                 
             for x in xrange(0, size):
