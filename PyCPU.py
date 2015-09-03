@@ -1344,8 +1344,7 @@ class PyCPU:
     def get_memory_address(self, instruction, opnum,size):                              # new version wrapper over old function
         address = self.get_memory_address_old(instruction, opnum,size)
         # handle address carry bit here
-        if len(str(address)) > 8:
-            address = address & 0xffffffff
+        address = address & 0xffffffff
         return address
     
     
