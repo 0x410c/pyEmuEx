@@ -55,13 +55,12 @@ for x in range(len(textsection.data)):
     emu.set_memory(codebase + x, int(ord(c)), size=1)
 
 print "[*] Text section loaded into memory"
-#print "[*] RData Section loading in memory"
-
-#for x in range(len(rdatasection.data)):
- #   c = rdatasection.data[x]
-    #print "0x%08x"%(database + x)
-  #  emu.set_memory(database + x, int(ord(c)), size=1)
-#print "[*] RData Loaded in memory"
+print "[*] RData Section loading in memory"
+for x in range(len(rdatasection.data)):
+    c = rdatasection.data[x]
+    print "0x%08x"%(database + x)
+    emu.set_memory(database + x, int(ord(c)), size=1)
+print "[*] RData Loaded in memory"
 print "[*] Loading data section bytes into memory"
 database = 0x40d000
 print len(datasection.data)

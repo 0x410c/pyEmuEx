@@ -15,7 +15,7 @@ import sys, os, time, struct, re
 sys.path.append("lib")
 
 import pydasm
-
+import math
 from PyContext import PyContext
 from PyFlags import PyFlags
 from PyInstruction import *
@@ -27,7 +27,7 @@ PyCPU:
     The heart of PyEmu.  The CPU class handles execution of instructions.
 '''
 class PyCPU:
-    DEBUG = 0
+    DEBUG = 3
     
     # Bitmap of eflags
     eflags_map = {"CF": 0x1,
@@ -1340,7 +1340,16 @@ class PyCPU:
     #
     # get_memory_address: Calculates the memory address from the instruction.
     #
-    def get_memory_address(self, instruction, opnum, size):
+    
+    def get_memory_address(self, instruction, opnum,size):                              # new version wrapper over old function
+        address = self.get_memory_address_old(instruction, opnum,size)
+        # handle address carry bit here
+        if len(str(address)) > 8:
+            address = address & 0xffffffff
+        return address
+    
+    
+    def get_memory_address_old(self, instruction, opnum, size):                             # adds a carry flag in displacement indirect memory refrence
         # Get the proper operand
         if opnum == 1:
             op = instruction.op1
@@ -1686,10 +1695,9 @@ class PyCPU:
                     return address
                 else:
                     address = self.get_register32(op.basereg) + op.displacement
-                    
                     if self.DEBUG > 2:
                         print "[*] Fetching reg + disp8 %x" % address
-                        
+                    
                     return address
             elif mod == 0x2:
                 # do register deref + displacement32
@@ -2750,10 +2758,12 @@ class PyCPU:
 
                 self.set_register(op1.reg, result, size)
             elif op1.type == pydasm.OPERAND_TYPE_MEMORY:
+                
                 op1value = self.get_memory_address(instruction, 1, size)
                 op2value = op2.immediate & self.get_mask(size)
 
                 # Do logic
+                print "0x%08x"%op1value
                 op1valuederef = self.get_memory(op1value, size)
                 result = op1valuederef & op2value
 
