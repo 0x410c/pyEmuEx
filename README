@@ -5,7 +5,7 @@ pyEmuEx by 0x410c
         1) use capstone instead of pydasm
         2) handle library calls
         3) a small win32 gui emulation (proposed)
-        4) anything else? mail me (aloksaini98@gmail.com)
+        4) anything else? mail me
 
 pyEmu by CodiePierce
 
